@@ -8,8 +8,13 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
   title: "KokonutUI Dashboard",
-  description: "A modern dashboard with theme switching",
-    generator: 'v0.dev'
+  description: "Financial Dashboard with User Authentication, Account Management, and Transaction Tracking",
+  generator: 'v0.dev',
+  icons: {
+    icon: '/kokonut-logo.svg',
+    shortcut: '/kokonut-logo.svg',
+    apple: '/kokonut-logo.svg',
+  },
 }
 
 export default function RootLayout({
