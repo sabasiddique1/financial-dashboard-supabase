@@ -1,86 +1,58 @@
-"use client"
-
-import { Calendar, CreditCard, Wallet, BarChart3, TrendingUp, Settings, User, Bell, Download } from "lucide-react"
-import { User as SupabaseUser } from "@supabase/supabase-js"
+import { Calendar, CreditCard, Wallet, TrendingUp, BarChart3 } from "lucide-react"
 import List01 from "./list-01"
 import List02 from "./list-02"
 import List03 from "./list-03"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 
-interface ContentProps {
-  user?: SupabaseUser | null
-}
-
-export default function Content({ user }: ContentProps) {
+export default function PublicContent() {
   return (
     <div className="space-y-6">
-      {/* User-Specific Features - Only visible when authenticated */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+      {/* Stats Overview */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card className="border border-gray-200 dark:border-[#1F1F23]">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400 flex items-center gap-2">
-              <User className="w-4 h-4" />
-              Your Profile
+            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400">
+              Total Balance
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Manage personal settings</p>
-            <Button variant="outline" size="sm" className="w-full">
-              View Profile
-            </Button>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">$26,540.25</div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Across all accounts</p>
+          </CardContent>
+        </Card>
+        <Card className="border border-gray-200 dark:border-[#1F1F23]">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400 flex items-center gap-2">
+              <TrendingUp className="w-4 h-4" />
+              Monthly Income
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">+$4,500.00</div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">This month</p>
           </CardContent>
         </Card>
         <Card className="border border-gray-200 dark:border-[#1F1F23]">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400 flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
-              Analytics
+              Transactions
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Advanced insights</p>
-            <Button variant="outline" size="sm" className="w-full">
-              View Reports
-            </Button>
-          </CardContent>
-        </Card>
-        <Card className="border border-gray-200 dark:border-[#1F1F23]">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400 flex items-center gap-2">
-              <Bell className="w-4 h-4" />
-              Notifications
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">3 new alerts</p>
-            <Button variant="outline" size="sm" className="w-full">
-              View All
-            </Button>
-          </CardContent>
-        </Card>
-        <Card className="border border-gray-200 dark:border-[#1F1F23]">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400 flex items-center gap-2">
-              <Download className="w-4 h-4" />
-              Export Data
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">Download statements</p>
-            <Button variant="outline" size="sm" className="w-full">
-              Export
-            </Button>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white">23</div>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">This month</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Main Dashboard Content */}
+      {/* Financial Content Preview */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white dark:bg-[#0F0F12] rounded-xl p-6 flex flex-col border border-gray-200 dark:border-[#1F1F23]">
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 text-left flex items-center gap-2 ">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 text-left flex items-center gap-2">
             <Wallet className="w-3.5 h-3.5 text-zinc-900 dark:text-zinc-50" />
-            Your Accounts
+            Accounts
           </h2>
           <div className="flex-1">
             <List01 className="h-full" />
@@ -107,3 +79,4 @@ export default function Content({ user }: ContentProps) {
     </div>
   )
 }
+

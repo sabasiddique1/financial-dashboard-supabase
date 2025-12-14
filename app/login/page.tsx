@@ -50,7 +50,7 @@ export default function LoginPage() {
         description: "You've been logged in successfully.",
       })
       
-      router.push("/dashboard")
+      router.push("/")
       router.refresh()
     } catch (error) {
       toast.error("Something went wrong", {
