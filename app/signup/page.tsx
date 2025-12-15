@@ -10,6 +10,7 @@ import { toast } from "sonner"
 
 import { createClient } from "@/lib/supabase/client"
 import { signupSchema, type SignupFormData } from "@/lib/schemas/auth"
+import { getAuthError } from "@/lib/utils/auth-errors"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -36,7 +37,16 @@ export default function SignupPage() {
     setIsLoading(true)
     
     try {
-      const { error } = await supabase.auth.signUp({
+      // Check if Supabase URL is configured
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+        toast.error("Configuration error", {
+          description: "Supabase URL is not configured. Please check your environment variables.",
+        })
+        setIsLoading(false)
+        return
+      }
+
+      const { data: signupData, error } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
         options: {
@@ -47,9 +57,27 @@ export default function SignupPage() {
       })
 
       if (error) {
-        toast.error("Signup failed", {
-          description: error.message,
+        console.error("Signup error details:", {
+          message: error.message,
+          status: error.status,
+          code: error.code,
+          fullError: error
         })
+        toast.error("Signup failed", {
+          description: getAuthError(error),
+        })
+        setIsLoading(false)
+        return
+      }
+
+      // Check if email confirmation is required
+      if (signupData.user && !signupData.session) {
+        // User created but needs email confirmation
+        toast.success("Account created successfully!", {
+          description: "Please check your email to verify your account.",
+        })
+        router.push("/login")
+        setIsLoading(false)
         return
       }
 
@@ -58,10 +86,17 @@ export default function SignupPage() {
       })
       
       router.push("/login")
-    } catch (error) {
-      toast.error("Something went wrong", {
-        description: "Please try again later.",
-      })
+    } catch (error: any) {
+      // Handle network errors
+      if (error?.message?.includes('Failed to fetch') || error?.message?.includes('ERR_NAME_NOT_RESOLVED')) {
+        toast.error("Connection error", {
+          description: "Cannot connect to Supabase. The project might be paused. Please check your Supabase dashboard.",
+        })
+      } else {
+        toast.error("Something went wrong", {
+          description: error?.message || "Please try again later.",
+        })
+      }
     } finally {
       setIsLoading(false)
     }
