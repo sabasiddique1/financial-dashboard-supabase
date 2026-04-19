@@ -112,3 +112,7 @@ After deployment:
 4. **Use HTTPS** in production (required for Supabase)
 5. **Keep service role key secret** (never expose in frontend)
 
+
+
+
+
